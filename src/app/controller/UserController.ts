@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import Queue from "../lib/Queue";
+
 
 export default {
     async store(req: Request, res: Response) {
@@ -9,8 +11,14 @@ export default {
             email,
             password
         }
+        /* 
+            Filas Altomatizadas primeiro parametro nome da key da fila que quer processar 
+            segundo parametro um objeto no nosso caso um objeto de users
 
-        // enviar um email para ele
+            la dentro de lib queue
+            exe: await Queue.add('NomeDaQueue', { objeto } // function() {} )
+        */
+        await Queue.add('RegistrationMail', { user })
 
         return res.json(user)
     }
